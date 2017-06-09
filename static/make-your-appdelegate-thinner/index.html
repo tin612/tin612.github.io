@@ -1,0 +1,237 @@
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <title>Make your AppDelegate thinner</title>
+    <meta name="description" content="">
+
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <link rel="shortcut icon" href="../favicon.ico">
+
+    <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Merriweather:300,700,700italic,300italic%7COpen+Sans:700,400">
+    <link rel="stylesheet" type="text/css" href="../assets/css/screen.css?v=f72550c2e3">
+
+
+    <link rel="canonical" href="index.html">
+    <meta name="referrer" content="no-referrer-when-downgrade">
+    <link rel="amphtml" href="amp/index.html">
+    
+    <meta property="og:site_name" content="Above Average iOS Developer">
+    <meta property="og:type" content="article">
+    <meta property="og:title" content="Make your AppDelegate thinner">
+    <meta property="og:description" content="First of all, as an iOS developer, maybe you've seen your AppDelegate file is included too much things like this one It include too much set up SDKs or UI stuff lie in there.   And also in a case you want to try a new SDK you've never use before">
+    <meta property="og:url" content="http://localhost:2368/make-your-appdelegate-thinner/">
+    <meta property="article:published_time" content="2017-06-08T14:55:26.000Z">
+    <meta property="article:modified_time" content="2017-06-08T15:35:20.000Z">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Make your AppDelegate thinner">
+    <meta name="twitter:description" content="First of all, as an iOS developer, maybe you've seen your AppDelegate file is included too much things like this one It include too much set up SDKs or UI stuff lie in there.   And also in a case you want to try a new SDK you've never use before">
+    <meta name="twitter:url" content="http://localhost:2368/make-your-appdelegate-thinner/">
+    <meta name="twitter:label1" content="Written by">
+    <meta name="twitter:data1" content="Phan Thanh Tin">
+    
+    <script type="application/ld+json">
+{
+    "@context": "https://schema.org",
+    "@type": "Article",
+    "publisher": {
+        "@type": "Organization",
+        "name": "Above Average iOS Developer",
+        "logo": "http://localhost:2368/ghost/img/ghosticon.jpg"
+    },
+    "author": {
+        "@type": "Person",
+        "name": "Phan Thanh Tin",
+        "image": {
+            "@type": "ImageObject",
+            "url": "http://localhost:2368/content/images/2017/06/12486025_1037547176304022_4268675477283677695_o.jpg",
+            "width": 1080,
+            "height": 1920
+        },
+        "url": "http://localhost:2368/author/tinpt/",
+        "sameAs": []
+    },
+    "headline": "Make your AppDelegate thinner",
+    "url": "http://localhost:2368/make-your-appdelegate-thinner/",
+    "datePublished": "2017-06-08T14:55:26.000Z",
+    "dateModified": "2017-06-08T15:35:20.000Z",
+    "description": "First of all, as an iOS developer, maybe you&#x27;ve seen your AppDelegate file is included too much things like this one It include too much set up SDKs or UI stuff lie in there.   And also in a case you want to try a new SDK you&#x27;ve never use before",
+    "mainEntityOfPage": {
+        "@type": "WebPage",
+        "@id": "http://localhost:2368"
+    }
+}
+    </script>
+
+    <meta name="generator" content="Ghost 0.11">
+    <link rel="alternate" type="application/rss+xml" title="Above Average iOS Developer" href="../rss/index.html">
+</head>
+<body class="post-template nav-closed">
+
+    <div class="nav">
+    <h3 class="nav-title">Menu</h3>
+    <a href="index.html#" class="nav-close">
+        <span class="hidden">Close</span>
+    </a>
+    <ul>
+            <li class="nav-home"><a href="../">Home</a></li>
+            <li class="nav-about-me"><a href="../about-me/">About Me</a></li>
+    </ul>
+        <a class="subscribe-button icon-feed" href="../rss/index.rss">Subscribe</a>
+</div>
+<span class="nav-cover"></span>
+
+
+    <div class="site-wrapper">
+
+        
+
+
+<header class="main-header " style="background-image: url(../content/images/2017/06/yFk2QjB-1.png); height:25vh">
+    <nav class="main-nav overlay clearfix">
+        
+            <a class="menu-button icon-menu" href="index.html#"><span class="word">Menu</span></a>
+    </nav>
+    <div class="vertical">
+        <div class="main-header-content inner">
+            <h1 class="page-title">Make your AppDelegate thinner</h1>
+        </div>
+    </div>
+</header>
+
+<main class="content" role="main">
+    <article class="post">
+
+        <header class="post-header">
+            <section class="post-meta">
+                <time class="post-date" datetime="2017-06-08">08 June 2017</time> 
+            </section>
+        </header>
+
+        <section class="post-content">
+            <p>First of all, as an iOS developer, maybe you've seen your AppDelegate file is included too much things like this one</p>
+
+<p><img src="../content/images/2017/06/Screen-Shot-2017-06-08-at-10.03.58-PM.png" alt="Bunch of things"></p>
+
+<p>It include too much set up SDKs or UI stuff lie in there. <br>
+ And also in a case you want to try a new SDK you've never use before and you have to make sure that your app still able to run correctly. Hmm too confused. There must be a better way</p>
+
+<p><img src="../content/images/2017/06/4433377.jpg" alt=""></p>
+
+<p>In the time i was working in my old company, I have learned a better way to make the AppDelegate more thinner.</p>
+
+<p>For example, my app will have a list of config need to be set up in AppDelegate like  </p>
+
+<pre><code>1. Localize set up  
+2. Google Analytics set up  
+3. Facebook Login SDK  
+4. Fabric and Crashlytics  
+5. OneSignal for notifications  
+6. A tracking SDK  
+7. Database migration (CoreData or Realm, etc)  
+</code></pre>
+
+<p>I will split the list to nth Services files <br>
+For example: Google Analytics</p>
+
+<pre><code class="language- Swift">class AnalyticsServices: NSObject, UIApplicationDelegate {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -&gt; Bool {
+
+        var configureError: NSError?
+       GGLContext.sharedInstance().configureWithError(&amp;configureError)
+        // Optional: configure GAI options.
+        let gai = GAI.sharedInstance()
+        gai?.trackUncaughtExceptions = true  // report uncaught exceptions
+        gai?.logger.logLevel = GAILogLevel.verbose  // remove before app release
+        return true
+    }
+}
+</code></pre>
+
+<p>If the SDK changed their function like the initializer or another method  in the new versions. We can go directly to that SDK's Services file in our project and fix it without care about another SDK's Services.</p>
+
+<p>Another example for the Database Migration </p>
+
+<pre><code class="language- Swift ">class RealmMigrationServices: NSObject, UIApplicationDelegate {  
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -&gt; Bool {
+        var config = Realm.Configuration(
+            schemaVersion: 16,
+            migrationBlock: { migration, oldSchemaVersion in
+                switch oldSchemaVersion {
+                 case 16: break
+                 default: break
+                 }
+        },
+            deleteRealmIfMigrationNeeded: true
+        )
+        Realm.Configuration.defaultConfiguration = config
+        return true
+    }
+}
+</code></pre>
+
+<p>So how can we call those Services class we have written. Go back to the project AppDelegate files. And do some trick like this one. <br>
+<img src="../content/images/2017/06/Screen-Shot-2017-06-08-at-10.33.02-PM.png" alt=""></p>
+
+<p>Now we will have a more cleaner AppDelegate file. If you want to remove a service just go to the array services and comment or delete it.</p>
+        </section>
+
+        <footer class="post-footer">
+
+
+            <figure class="author-image">
+                <a class="img" href="../author/tinpt/" style="background-image: url(../content/images/2017/06/12486025_1037547176304022_4268675477283677695_o.jpg)"><span class="hidden">Phan Thanh Tin's Picture</span></a>
+            </figure>
+
+            <section class="author">
+                <h4><a href="../author/tinpt/">Phan Thanh Tin</a></h4>
+
+                    <p>Read <a href="../author/tinpt/">more posts</a> by this author.</p>
+                <div class="author-meta">
+                    
+                    
+                </div>
+            </section>
+
+
+            <section class="share">
+                <h4>Share this post</h4>
+                <a class="icon-twitter" href="https://twitter.com/intent/tweet?text=Make%20your%20AppDelegate%20thinner&amp;url=http://localhost:2368/make-your-appdelegate-thinner/" onclick="window.open(this.href, 'twitter-share', 'width=550,height=235');return false;">
+                    <span class="hidden">Twitter</span>
+                </a>
+                <a class="icon-facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:2368/make-your-appdelegate-thinner/" onclick="window.open(this.href, 'facebook-share','width=580,height=296');return false;">
+                    <span class="hidden">Facebook</span>
+                </a>
+                <a class="icon-google-plus" href="https://plus.google.com/share?url=http://localhost:2368/make-your-appdelegate-thinner/" onclick="window.open(this.href, 'google-plus-share', 'width=490,height=530');return false;">
+                    <span class="hidden">Google+</span>
+                </a>
+            </section>
+
+
+        </footer>
+
+    </article>
+</main>
+
+<aside class="read-next">
+</aside>
+
+
+
+        <footer class="site-footer clearfix">
+            <section class="copyright"><a href="../">Above Average iOS Developer</a> © 2017</section>
+            <section class="poweredby">Proudly published with <a href="https://ghost.org">Ghost</a></section>
+        </footer>
+
+    </div>
+
+    <script type="text/javascript" src="http://code.jquery.com/jquery-1.12.0.min.js"></script>
+    
+    <script type="text/javascript" src="../assets/js/jquery.fitvids.js?v=f72550c2e3"></script>
+    <script type="text/javascript" src="../assets/js/index.js?v=f72550c2e3"></script>
+
+</body>
