@@ -11,7 +11,7 @@ config = {
     // When running Ghost in the wild, use the production environment.
     // Configure your URL and mail settings here
     production: {
-        url: 'http://my-ghost-blog.com',
+        url: 'tin612.github.io',
         mail: {
             transport: 'SMTP',
             options: {
@@ -35,6 +35,7 @@ config = {
             port: '2368'
         }
     },
+
 
     // ### Development **(default)**
     development: {
