@@ -1,0 +1,71 @@
+<rss xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:media="http://search.yahoo.com/mrss/" version="2.0"><channel><title>Above Average iOS Developer</title><description>For academic purpose only</description><link>http://localhost:2368/</link><generator>Ghost 0.11</generator><lastBuildDate>Fri, 09 Jun 2017 09:13:21 GMT</lastBuildDate><atom:link href="http://localhost:2368/rss/" rel="self" type="application/rss+xml"/><ttl>60</ttl><item><title>Make your AppDelegate thinner</title><description>&lt;p&gt;First of all, as an iOS developer, maybe you've seen your AppDelegate file is included too much things like this one&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2017/06/Screen-Shot-2017-06-08-at-10.03.58-PM.png" alt="Bunch of things"&gt;&lt;/p&gt;
+
+&lt;p&gt;It include too much set up SDKs or UI stuff lie in there. &lt;br&gt;
+ And also in a case you want to try a new SDK you've never use before&lt;/p&gt;</description><link>http://localhost:2368/make-your-appdelegate-thinner/</link><guid isPermaLink="false">215f6dc0-f3e7-40c4-bd80-2cf7f49abb0a</guid><dc:creator>Phan Thanh Tin</dc:creator><pubDate>Thu, 08 Jun 2017 14:55:26 GMT</pubDate><content:encoded>&lt;p&gt;First of all, as an iOS developer, maybe you've seen your AppDelegate file is included too much things like this one&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2017/06/Screen-Shot-2017-06-08-at-10.03.58-PM.png" alt="Bunch of things"&gt;&lt;/p&gt;
+
+&lt;p&gt;It include too much set up SDKs or UI stuff lie in there. &lt;br&gt;
+ And also in a case you want to try a new SDK you've never use before and you have to make sure that your app still able to run correctly. Hmm too confused. There must be a better way&lt;/p&gt;
+
+&lt;p&gt;&lt;img src="http://localhost:2368/content/images/2017/06/4433377.jpg" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;In the time i was working in my old company, I have learned a better way to make the AppDelegate more thinner.&lt;/p&gt;
+
+&lt;p&gt;For example, my app will have a list of config need to be set up in AppDelegate like  &lt;/p&gt;
+
+&lt;pre&gt;&lt;code&gt;1. Localize set up  
+2. Google Analytics set up  
+3. Facebook Login SDK  
+4. Fabric and Crashlytics  
+5. OneSignal for notifications  
+6. A tracking SDK  
+7. Database migration (CoreData or Realm, etc)  
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;I will split the list to nth Services files &lt;br&gt;
+For example: Google Analytics&lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language- Swift"&gt;class AnalyticsServices: NSObject, UIApplicationDelegate {
+
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -&amp;gt; Bool {
+
+        var configureError: NSError?
+       GGLContext.sharedInstance().configureWithError(&amp;amp;configureError)
+        // Optional: configure GAI options.
+        let gai = GAI.sharedInstance()
+        gai?.trackUncaughtExceptions = true  // report uncaught exceptions
+        gai?.logger.logLevel = GAILogLevel.verbose  // remove before app release
+        return true
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;If the SDK changed their function like the initializer or another method  in the new versions. We can go directly to that SDK's Services file in our project and fix it without care about another SDK's Services.&lt;/p&gt;
+
+&lt;p&gt;Another example for the Database Migration &lt;/p&gt;
+
+&lt;pre&gt;&lt;code class="language- Swift "&gt;class RealmMigrationServices: NSObject, UIApplicationDelegate {  
+    func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey : Any]? = nil) -&amp;gt; Bool {
+        var config = Realm.Configuration(
+            schemaVersion: 16,
+            migrationBlock: { migration, oldSchemaVersion in
+                switch oldSchemaVersion {
+                 case 16: break
+                 default: break
+                 }
+        },
+            deleteRealmIfMigrationNeeded: true
+        )
+        Realm.Configuration.defaultConfiguration = config
+        return true
+    }
+}
+&lt;/code&gt;&lt;/pre&gt;
+
+&lt;p&gt;So how can we call those Services class we have written. Go back to the project AppDelegate files. And do some trick like this one. &lt;br&gt;
+&lt;img src="http://localhost:2368/content/images/2017/06/Screen-Shot-2017-06-08-at-10.33.02-PM.png" alt=""&gt;&lt;/p&gt;
+
+&lt;p&gt;Now we will have a more cleaner AppDelegate file. If you want to remove a service just go to the array services and comment or delete it.&lt;/p&gt;</content:encoded></item></channel></rss>
